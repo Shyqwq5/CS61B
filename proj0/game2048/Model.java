@@ -134,6 +134,7 @@ public class Model extends Observable {
                         continue;}
                     else{last_value = now.value();
                         board.move(col,row+empty,now);
+                        last_r = row + empty;
                         if(empty == 0){continue;}
                         changed = true;
                         continue;}
