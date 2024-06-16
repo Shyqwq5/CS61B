@@ -19,7 +19,7 @@ public class TimeAList {
     }
 
     public static void main(String[] args) {
-    timeAListConstruction(12800000);
+    timeAListConstruction(64000);
     }
 
     public static void timeAListConstruction(int a) {
