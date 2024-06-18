@@ -91,11 +91,11 @@ public class LinkedListDeque<T> {
 
     public T get(int index){
         IntNode copy = sentinel;
-        if (index ==0 && size>0){
-            return copy.front.item;}
+        /*if (index ==0 && size>0){
+            return copy.front.item;}*/
 
-        if (index > 0 && index <= size) {
-            for (int i=0;i<index; i+=1) {
+        if (index >= 0 && index <= size) {
+            for (int i=0;i<=index; i+=1) {
                 copy = copy.next;}
             return copy.item;}
 
@@ -107,14 +107,11 @@ public class LinkedListDeque<T> {
          if (index < 0 || index >= size) {
              return null;
          }
-         if (index == 0) {
-             return sentinel.front.item;
-         }
          return getRecursiveHelper(index, sentinel.next);  //
      }
 
     private T getRecursiveHelper(int index, IntNode node) {
-        if (index == 1) {
+        if (index == 0) {
             return node.item;
         }
         else {  //

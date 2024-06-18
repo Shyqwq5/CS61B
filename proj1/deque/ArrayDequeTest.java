@@ -27,7 +27,7 @@ public class ArrayDequeTest {
             int randVal = StdRandom.uniform(0, 100);
             L.addFirst(randVal);
             B.addFirst(randVal);}
-        assertEquals(B.get(200),L.get(200));
+        assertEquals(B.get(200),B.getRecursive(200));
     }
 
     @Test
@@ -95,7 +95,8 @@ public class ArrayDequeTest {
         for (int i = 0; i < N; i += 1) {
             L.removeLast();
             B.removeLast();
-            assertEquals(B.get(0),L.get(0));}
+            assertEquals(B.get(0),L.get(0));
+        assertEquals(B.getRecursive(0),L.get(0));}
         L.printDeque();
         B.printDeque();
 
