@@ -73,6 +73,33 @@ public class ArrayDequeTest {
         B.printDeque();
 
     }
+    @Test
+    public void get0() {
+        ArrayDeque<Integer> L = new ArrayDeque<>();
+        LinkedListDeque<Integer> B = new LinkedListDeque<>();
+        int N = 10;
+        for (int i = 0; i < N; i += 1) {
+            int randVal = StdRandom.uniform(0, 100);
+            L.addFirst(randVal);
+            B.addFirst(randVal);
+            assertEquals(B.get(0),L.get(0));}
+        for (int i = 0; i < N; i += 1) {
+            L.removeFirst();
+            B.removeFirst();
+            assertEquals(B.get(0),L.get(0));}
+        for (int i = 0; i < N; i += 1) {
+            int randVal = StdRandom.uniform(0, 100);
+            L.addLast(randVal);
+            B.addLast(randVal);
+            assertEquals(B.get(0),L.get(0));}
+        for (int i = 0; i < N; i += 1) {
+            L.removeLast();
+            B.removeLast();
+            assertEquals(B.get(0),L.get(0));}
+        L.printDeque();
+        B.printDeque();
+
+    }
 }
 
 
