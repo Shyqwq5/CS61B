@@ -1,10 +1,82 @@
 package deque;
 
+import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.Stopwatch;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class ArrayDequeTest {
     @Test
+    public void addLast() {
+        ArrayDeque<Integer> L = new ArrayDeque<>();
+        LinkedListDeque<Integer> B = new LinkedListDeque<>();
+        int N = 500;
+        for (int i = 0; i < N; i += 1) {
+            int randVal = StdRandom.uniform(0, 100);
+            L.addLast(randVal);
+            B.addLast(randVal);}
+        assertEquals(B.get(200),L.get(200));
+        }
+    @Test
+    public void addFirst() {
+        ArrayDeque<Integer> L = new ArrayDeque<>();
+        LinkedListDeque<Integer> B = new LinkedListDeque<>();
+        int N = 500;
+        for (int i = 0; i < N; i += 1) {
+            int randVal = StdRandom.uniform(0, 100);
+            L.addFirst(randVal);
+            B.addFirst(randVal);}
+        assertEquals(B.get(200),L.get(200));
+    }
+
+    @Test
+    public void removeFirstandLast() {
+        ArrayDeque<Integer> L = new ArrayDeque<>();
+        LinkedListDeque<Integer> B = new LinkedListDeque<>();
+        int N = 50;
+        for (int i = 0; i < N; i += 1) {
+            int randVal = StdRandom.uniform(0, 100);
+            L.addFirst(randVal);
+            B.addFirst(randVal);}
+        for (int i = 0; i < N; i += 1) {
+            int randVal = StdRandom.uniform(0, 100);
+            L.addLast(randVal);
+            B.addLast(randVal);}
+        assertEquals(B.get(20),L.get(20));
+        for (int i = N/2; i < N; i += 1) {
+            L.removeFirst();
+            B.removeFirst();}
+        assertEquals(B.get(25),L.get(25));
+        for (int i = N/2; i < N; i += 1) {
+            L.removeLast();
+            B.removeLast();}
+        int a = B.get(0);
+        int b = L.get(0);
+        assertEquals(a,b);
+
+    }
+    @Test
+    public void print() {
+        ArrayDeque<Integer> L = new ArrayDeque<>();
+        LinkedListDeque<Integer> B = new LinkedListDeque<>();
+        int N = 50;
+        for (int i = 0; i < N; i += 1) {
+            int randVal = StdRandom.uniform(0, 100);
+            L.addFirst(randVal);
+            B.addFirst(randVal);}
+        for (int i = 0; i < N; i += 1) {
+            int randVal = StdRandom.uniform(0, 100);
+            L.addLast(randVal);
+            B.addLast(randVal);}
+        L.printDeque();
+        B.printDeque();
+
+    }
+}
+
+
+   /*@Test
     public void addIsEmptySizeTest() {}
 
     private static void printTimingTable(ArrayDeque<Integer> Ns, ArrayDeque<Double> times, ArrayDeque<Integer> opCounts) {
@@ -20,7 +92,7 @@ public class ArrayDequeTest {
     }
 
     public static void main(String[] args) {
-        timeAListConstruction(11164000);
+        timeAListConstruction(1614000);
     }
 
     public static void timeAListConstruction(int a) {
@@ -42,5 +114,95 @@ public class ArrayDequeTest {
 
         printTimingTable(Ns,times,opCounts);
     }
+    @Test
+    public void testThreeAddThreeRemove1() {
+        ArrayDeque<Integer> A = new ArrayDeque<>();
+        LinkedListDeque<Integer> B = new LinkedListDeque<>();
+
+        A.addLast(4);
+        B.addLast(4);
+        A.addLast(5);
+        B.addLast(5);
+        A.addLast(6);
+        B.addLast(6);
+
+        assertEquals(A.size(),B.size());
+
+        int T;
+        int S;
+        T =A.removeLast();
+        S = B.removeLast();
+        assertEquals(T,S);
+
+        assertEquals(A.removeLast(),B.removeLast());
+        assertEquals(A.removeLast(),B.removeLast());
     }
+    @Test
+    public void randomizedTest1() {
+        ArrayDeque<Integer> L = new ArrayDeque<>();
+        LinkedListDeque<Integer> B = new LinkedListDeque<>();
+
+        int N = 500;
+        for (int i = 1; i < N; i += 1) {
+
+            // addLast
+            int randVal = StdRandom.uniform(0, 100);
+            L.addLast(randVal);
+            B.addLast(randVal);
+            int randVal2 = StdRandom.uniform(0, 100);
+            L.addFirst(randVal2);
+            B.addFirst(randVal2);
+
+            if (L.size() != 0) {
+            int number = StdRandom.uniform(0, L.size());
+            int a= L.get(number);
+            int b= B.get(number);
+            assertEquals(a, b);}
+
+        }
+
+    }
+    @Test
+    public void randomizedTest() {
+        ArrayDeque<Integer> L = new ArrayDeque<>();
+        LinkedListDeque<Integer> B = new LinkedListDeque<>();
+
+        int N = 10000;
+        for (int i = 0; i < N; i += 1) {
+            int operationNumber = StdRandom.uniform(0, 5);
+            if (operationNumber == 0) {
+                // addLast
+                int randVal = StdRandom.uniform(0, 100);
+                L.addLast(randVal);
+                B.addLast(randVal);
+            }
+            if (operationNumber == 1) {
+                assertEquals(L.size(), B.size());
+            }
+            if (operationNumber == 2) {
+                // getLast
+                if (L.size() != 0) {
+                    assertEquals(L.get(1), B.get(1));
+                }
+            }
+            if (operationNumber == 3) {
+                // removeLast
+
+                if (L.size() != 0) {
+
+                    assertEquals(L.removeLast(), B.removeLast());
+                }
+            }
+            if (operationNumber == 4) {
+                //get
+                if (L.size() != 0) {
+                    int number = StdRandom.uniform(0, L.size());
+                    int a= L.get(number);
+                    int b= B.get(number);
+                    assertEquals(a, b);
+                }
+            }
+        }
+    }}*/
+
 

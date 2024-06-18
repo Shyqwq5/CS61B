@@ -30,6 +30,7 @@ public class LinkedListDeque<T> {
         sentinel.next = sentinel;
         sentinel.front = sentinel;
         sentinel.next = new IntNode(x, sentinel ,sentinel);
+        sentinel.front = sentinel.next;
 
         size = 1;
     }
@@ -45,7 +46,7 @@ public class LinkedListDeque<T> {
         size += 1;
     } //Adds an item of type T to the front of the deque. You can assume that item is never null.
     public void addLast(T item){
-        sentinel.front = new IntNode(item,sentinel.next,sentinel);
+        sentinel.front = new IntNode(item,sentinel.front,sentinel);
         sentinel.front.front.next = sentinel.front;
         size += 1;
     } //Adds an item of type T to the back of the deque. You can assume that item is never null.
@@ -94,7 +95,8 @@ public class LinkedListDeque<T> {
             return copy.front.item;}
 
         if (index > 0 && index <= size) {
-            for (int i=0;i<index; i+=1) {copy = copy.next;}
+            for (int i=0;i<index; i+=1) {
+                copy = copy.next;}
             return copy.item;}
 
         return null;
