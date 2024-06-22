@@ -1,9 +1,12 @@
+package deque;
+
 public class ArrayDeque <T> implements Deque<T> {
     private T[] items;
     private int start;
     private int size;
     private int rear;
 
+    @SuppressWarnings("unchecked")
     public ArrayDeque(){
         items = (T[]) new Object[8];
         start = 4;
@@ -11,6 +14,7 @@ public class ArrayDeque <T> implements Deque<T> {
         rear = 7;
     }
 
+    @SuppressWarnings("unchecked")
     private void resize(int newSize){
         int t = newSize/3;
         T[] newItems = (T[]) new Object[newSize];
@@ -36,11 +40,7 @@ public class ArrayDeque <T> implements Deque<T> {
         size +=1;
        
     }
-    //Adds an item of type T to the back of the deque. You can assume that item is never null.
-    /*public boolean isEmpty(){
-        return size==0;
-    }*/
-    // Returns true if deque is empty, false otherwise.
+
     public int size(){
         return size;
     }
@@ -80,9 +80,7 @@ public class ArrayDeque <T> implements Deque<T> {
     // Removes and returns the item at the back of the deque. If no such item exists, returns null.
     public T get(int index){
         return items[start +index];
-        /*if(index ==0) {return items[size+start-1];}
-        return items[start +index -1];*/
-    }
+
     //: Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque!
     //In addition, we also want our two Deques to implement these two special methods:
 
@@ -92,4 +90,4 @@ public class ArrayDeque <T> implements Deque<T> {
     //public boolean equals(Object o){}
     //Returns whether or not the parameter o is equal to the Deque. o is considered equal if it is a Deque and if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
     // (ADDED 2/12: You’ll need to use the instance of keywords for this. Read here for more information)
-}
+}}
