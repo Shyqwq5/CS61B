@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque <T> implements Deque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque <T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int start;
     private int size;
@@ -79,15 +81,36 @@ public class ArrayDeque <T> implements Deque<T> {
     }
     // Removes and returns the item at the back of the deque. If no such item exists, returns null.
     public T get(int index){
-        return items[start +index];
+        return items[start +index];}
 
     //: Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque!
     //In addition, we also want our two Deques to implement these two special methods:
+    private class ArraySetIterator implements Iterator<T>{
+        private int index = 0;
+        public ArraySetIterator() {}
+        public boolean hasNext(){
+            return index < size;
+        }
+        public T next() {
+            T returnItem = get(index);
+            index += 1;
+            return returnItem;
+        }
+    }
 
-    //public Iterator<T> iterator(){}
+    public Iterator<T> iterator(){
+        return new ArraySetIterator();}
     //The Deque objects we’ll make are iterable (i.e. Iterable<T>) so we must provide this method to return an iterator.
 
-    //public boolean equals(Object o){}
+    public boolean equals(Object o){
+        if(this == o){return true;}
+        if(o instanceof ArrayDeque){if(size != ((ArrayDeque)o).size()){return false;}
+            for(int i = 0; i < size; i++){
+                if(!get(i).equals(((ArrayDeque)o).get(i))){return false;}
+            }
+        }
+        return false;
+    }
     //Returns whether or not the parameter o is equal to the Deque. o is considered equal if it is a Deque and if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
     // (ADDED 2/12: You’ll need to use the instance of keywords for this. Read here for more information)
-}}
+}

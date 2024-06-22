@@ -1,8 +1,9 @@
 package deque;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListDeque<T> implements Deque<T> {
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private class IntNode {
         public T item;
         public IntNode next;
@@ -119,10 +120,31 @@ public class LinkedListDeque<T> implements Deque<T> {
         }
     }
 
+    private class LinkedSetIterator implements Iterator<T> {
+        private int index = 0;
+        public LinkedSetIterator() {}
+        public boolean hasNext(){
+            return index < size;
+        }
+        public T next() {
+            T returnItem = get(index);
+            index += 1;
+            return returnItem;
+        }
+    }
 
+    public Iterator<T> iterator(){
+        return new LinkedSetIterator();}
 
+    public boolean equals(Object o){
+        if(this == o){return true;}
+        if(o instanceof LinkedListDeque){if(size != ((LinkedListDeque)o).size()){return false;}
+            for(int i = 0; i < size; i++){
+                if(!get(i).equals(((LinkedListDeque)o).get(i))){return false;}
+            }
+        }
+        return false;}
 }
-    //public boolean equals(Object o){}
     // Returns whether or not the parameter o is equal to the Deque. o is considered equal if it is a Deque and if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
     // (ADDED 2/12: You’ll need to use the instance of keywords for this. Read here for more information)
 
