@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class ArrayDequeTest {
     @Test
     public void addLast() {
-        ArrayDeque<Integer> L = new ArrayDeque<>();
+        Deque<Integer> L = new ArrayDeque<>();
         LinkedListDeque<Integer> B = new LinkedListDeque<>();
         int N = 500;
         for (int i = 0; i < N; i += 1) {

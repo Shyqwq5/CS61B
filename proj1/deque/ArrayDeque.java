@@ -1,6 +1,4 @@
-package deque;
-
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque <T> implements Deque<T> {
     private T[] items;
     private int start;
     private int size;
@@ -12,6 +10,7 @@ public class ArrayDeque<T> implements Deque<T>{
         size = 0;
         rear = 7;
     }
+
     private void resize(int newSize){
         int t = newSize/3;
         T[] newItems = (T[]) new Object[newSize];
@@ -20,7 +19,6 @@ public class ArrayDeque<T> implements Deque<T>{
         start = t;
         rear = newSize - 1;
     }
-
     public void addFirst(T item){
         if(start == 0){
             resize(size*3);
@@ -62,7 +60,7 @@ public class ArrayDeque<T> implements Deque<T>{
         items[start] = null;
         size -=1;
         start +=1;
-        if (rear > 7 &&  size < (rear+1)/4){int t= size;
+        if (rear > 7 &&  size < (rear+1)/4){
             resize(size*3);
         }
         return item;
@@ -74,7 +72,7 @@ public class ArrayDeque<T> implements Deque<T>{
         T item = items[start + size];
         items[start + size] = null;
 
-        if (rear > 7 &&  size < (rear+1)/4){int t= size;
+        if (rear > 7 &&  size < (rear+1)/4){
             resize(size*3);
         }
         return item;
