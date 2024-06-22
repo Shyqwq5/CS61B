@@ -2,7 +2,7 @@ package deque;
 
 import java.util.NoSuchElementException;
 
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T> {
     private class IntNode {
         public T item;
         public IntNode next;
@@ -52,9 +52,9 @@ public class LinkedListDeque<T> {
     } //Adds an item of type T to the back of the deque. You can assume that item is never null.
 
 
-    public boolean isEmpty(){
+   /* public boolean isEmpty(){
         if (size ==0) {return true;}
-        return false;}
+        return false;}*/
     //Returns true if deque is empty, false otherwise.
 
     public int size(){

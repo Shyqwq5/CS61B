@@ -1,6 +1,6 @@
 package deque;
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
     private T[] items;
     private int start;
     private int size;
@@ -39,9 +39,9 @@ public class ArrayDeque<T> {
        
     }
     //Adds an item of type T to the back of the deque. You can assume that item is never null.
-    public boolean isEmpty(){
+    /*public boolean isEmpty(){
         return size==0;
-    }
+    }*/
     // Returns true if deque is empty, false otherwise.
     public int size(){
         return size;
