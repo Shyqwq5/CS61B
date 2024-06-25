@@ -55,7 +55,7 @@ public class CapersRepository {
         // TODO
         File story = Utils.join(CAPERS_FOLDER,"story");
         String past_story = Utils.readContentsAsString(story);
-        Utils.writeContents(story, past_story,"\n",text);
+        Utils.writeContents(story, past_story,text,"\n");
         String all_story = Utils.readContentsAsString(story);
         System.out.print(all_story);
     }
