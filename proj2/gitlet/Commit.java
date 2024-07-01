@@ -38,6 +38,7 @@ public class Commit implements Serializable {
     /* TODO: fill in the rest of this class. */
     public Commit(String message) {
         this.message = message;
+        this.treeMap = new TreeMap<>();
     }
 
     public void makeinit(){
