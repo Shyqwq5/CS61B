@@ -227,11 +227,11 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         }
         public K next(){t -=1;
             i+=1;
-            int t=0;
+            int j=0;
             for (Collection<Node> col: buckets){
                 for (Node node : col) {
-                    t+=1;
-                    if (t == i){return node.key;}
+                    j+=1;
+                    if (j == i){return node.key;}
             }
 
 

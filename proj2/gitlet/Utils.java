@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Formatter;
 import java.util.List;
+import java.nio.file.Path;
 
 
 /** Assorted utilities.
@@ -35,6 +36,14 @@ class Utils {
 
     /** Returns the SHA-1 hash of the concatenation of VALS, which may
      *  be any mixture of byte arrays and Strings. */
+    static String seven(String sha1){
+        if (sha1.length() < 7) {
+            throw new IllegalArgumentException("String length is less than 7 characters.");
+        }
+        String substring = sha1.substring(0, 7);
+        return substring;
+    }
+
     static String sha1(Object... vals) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
@@ -189,14 +198,14 @@ class Utils {
     }
 
     /* OTHER FILE UTILITIES */
-
+    /*
     /** Return the concatentation of FIRST and OTHERS into a File designator,
      *  analogous to the {@link java.nio.file.Paths.#get(String, String[])}
      *  method. */
     static File join(String first, String... others) {
         return Paths.get(first, others).toFile();
     }
-
+    /*
     /** Return the concatentation of FIRST and OTHERS into a File designator,
      *  analogous to the {@link java.nio.file.Paths.#get(String, String[])}
      *  method. */
@@ -235,5 +244,38 @@ class Utils {
     static void message(String msg, Object... args) {
         System.out.printf(msg, args);
         System.out.println();
+    }
+
+    static File changepath(File start, File end, File file) {
+
+        Path pstart = start.toPath();
+        Path pfile = file.toPath();
+        Path pend = end.toPath();
+        try{
+        Path prfile = pstart.relativize(pfile);
+        Path newpath = pend.resolve(prfile);
+        File newfile = newpath.toFile();
+        return newfile;
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e);
+        }
+
+    }
+
+    static File changetoblob(File file) {
+        return changepath(Repository.CWD, Repository.BLOB_DIR, file);
+    }
+
+    static File changetocwd(File file) {
+        return changepath(Repository.BLOB_DIR,Repository.CWD, file);
+    }
+    static void forcecreat(File file) {
+        File parent = file.getParentFile();
+        parent.mkdirs();
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
