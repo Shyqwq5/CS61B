@@ -23,17 +23,17 @@ public class Main {
         switch(firstArg) {
 
             case "init":
-                validateNumArgs("init", args, 1);
+                //("init", args, 1);
                 Repository.initcommand();
                 break;
 
             case "add":
-                validateNumArgs("add", args, 2);
+                //validateNumArgs("add", args, 2);
                 Repository.addcommand(secondArg);
                 break;
 
             case "rm":
-                validateNumArgs("rm", args, 2);
+                //validateNumArgs("rm", args, 2);
                 Repository.rmcommand(secondArg);
                 break;
 
@@ -42,26 +42,26 @@ public class Main {
                 {
                     throw new RuntimeException("Please enter a commit message.");
             }
-                validateNumArgs("commit", args, 2);
+                //validateNumArgs("commit", args, 2);
                 Repository.makecommit(secondArg);
                 break;
 
             case "checkout":
-                
+
                 Repository.checkoutcommand();
                 break;
 
 
             case "log":
-                validateNumArgs("log", args, 1);
+                //validateNumArgs("log", args, 1);
                 Repository.logcommand();
                 break;
             case "global-log":
-                validateNumArgs("global-log", args, 1);
+                //validateNumArgs("global-log", args, 1);
                 Repository.globallogcommand();
                 break;
             case "find":
-                validateNumArgs("find", args, 2);
+                //validateNumArgs("find", args, 2);
                 Repository.findcommand(secondArg);
                 break;
 
