@@ -17,9 +17,9 @@ public class Main {
         if (args.length == 0) {
             throw new RuntimeException("Must have at least one argument");
         }
+
         String firstArg = args[0];
-        String secondArg = args[1];
-        String thirdArg = args[2];
+        String secondArg;
         switch(firstArg) {
 
             case "init":
@@ -28,11 +28,13 @@ public class Main {
                 break;
 
             case "add":
+                secondArg = args[1];
                 //validateNumArgs("add", args, 2);
                 Repository.addcommand(secondArg);
                 break;
 
             case "rm":
+                secondArg = args[1];
                 //validateNumArgs("rm", args, 2);
                 Repository.rmcommand(secondArg);
                 break;
@@ -42,6 +44,7 @@ public class Main {
                 {
                     throw new RuntimeException("Please enter a commit message.");
             }
+                secondArg = args[1];
                 //validateNumArgs("commit", args, 2);
                 Repository.makecommit(secondArg);
                 break;
@@ -61,6 +64,7 @@ public class Main {
                 Repository.globallogcommand();
                 break;
             case "find":
+                secondArg = args[1];
                 //validateNumArgs("find", args, 2);
                 Repository.findcommand(secondArg);
                 break;
