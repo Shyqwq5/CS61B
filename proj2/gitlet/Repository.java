@@ -72,7 +72,7 @@ public class Repository {
     }
 
     public static void addcommand(String filename){
-        head_commit = readObject(Repository.HEAD,Commit.class);
+        head_commit = gethead();
         currentMap = head_commit.treeMap;
 
         File here = new File(System.getProperty("user.dir"));

@@ -68,7 +68,7 @@ public class Commit implements Serializable {
         */
         this.date = new java.util.Date();
         this.parent = sha1((Object) readContents(Repository.HEAD));
-        this.treeMap = deepCopyTreeMap(Repository.head_commit.treeMap);
+        this.treeMap = deepCopyTreeMap(Repository.gethead().treeMap);
 
         Stage now = readObject(Repository.STAGE, Stage.class);
         TreeMap<File, String> addList = now.addList;
