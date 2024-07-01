@@ -90,7 +90,7 @@ public class Repository {
                 if(currentMap.get(this_file).equals(file_sha1)){
                     if(addList.containsKey(this_file)){
                         addList.remove(this_file);}
-                    else return;
+                    else {return;}
                     }
                 else {
                     addList.put(this_file, file_sha1);

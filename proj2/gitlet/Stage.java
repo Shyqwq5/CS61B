@@ -11,7 +11,10 @@ public class Stage implements Serializable {
     public TreeMap<File, String> addList;
     public ArrayList<File> rmList;
 
-    public Stage() {}
+    public Stage() {
+        this.addList=new TreeMap<>();
+        this.rmList=new ArrayList<>();
+    }
     }
 
 

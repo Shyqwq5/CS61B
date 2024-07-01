@@ -50,7 +50,6 @@ public class Main {
                 break;
 
             case "checkout":
-
                 Repository.checkoutcommand();
                 break;
 
@@ -68,7 +67,6 @@ public class Main {
                 //validateNumArgs("find", args, 2);
                 Repository.findcommand(secondArg);
                 break;
-
             case "status":
                 break;
             case "branch":
