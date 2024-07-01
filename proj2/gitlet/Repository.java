@@ -2,6 +2,7 @@ package gitlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -194,13 +195,19 @@ public class Repository {
         File thisfile = join(COMMIT_DIR,sha1);
         Commit commit = readObject(thisfile,Commit.class);
         System.out.println("===");
-        System.out.println(sha1);
+        System.out.println("commit");
+        System.out.print(" ");
+        System.out.print(sha1);
         if(commit.merge != null){
             System.out.println(seven(commit.parent));
             System.out.print(" ");
             System.out.print(seven(commit.merge));
         }
-        System.out.println(commit.date);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z");
+        String formattedDate = formatter.format(commit.date);
+        System.out.println("Date： ");
+        System.out.print(formattedDate);
         System.out.println(commit.message);
         System.out.println();
 
@@ -211,13 +218,19 @@ public class Repository {
         File thisfile = join(COMMIT_DIR,sha1);
         Commit commit = readObject(thisfile,Commit.class);
         System.out.println("===");
-        System.out.println(sha1);
+        System.out.println("commit");
+        System.out.print(" ");
+        System.out.print(sha1);
         if(commit.merge != null){
             System.out.println(seven(commit.parent));
             System.out.print(" ");
             System.out.print(seven(commit.merge));
         }
-        System.out.println(commit.date);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z");
+        String formattedDate = formatter.format(commit.date);
+        System.out.println("Date： ");
+        System.out.print(formattedDate);
         System.out.println(commit.message);
         System.out.println();
     }
