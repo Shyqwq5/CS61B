@@ -279,19 +279,7 @@ class Utils {
         }
     }
 
-    static void deletall(File thatfile){
-        if (thatfile.isDirectory()) {
-            File[] files = thatfile.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    restrictedDelete(file);  // 递归删除子文件和子目录
-                }
-            }
-        }
-    }
     static void updatestage(){
-    deletall(Repository.ADD_DIR);
-    deletall(Repository.RM_DIR);
     Stage stage = readObject(Repository.STAGE, Stage.class);
     stage.addList = new TreeMap<>();
     stage.rmList = new ArrayList<>();
