@@ -14,10 +14,10 @@ import java.nio.file.Paths;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Formatter;
-import java.util.List;
+import java.util.*;
 import java.nio.file.Path;
+
+import static org.eclipse.jetty.util.IO.delete;
 
 
 /** Assorted utilities.
@@ -278,4 +278,22 @@ class Utils {
             throw new RuntimeException(e);
         }
     }
+
+    static void deletall(File thatfile){
+        if (thatfile.isDirectory()) {
+            File[] files = thatfile.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    delete(file);  // 递归删除子文件和子目录
+                }
+            }
+        }
+    }
+    static void updatestage(){
+    deletall(Repository.ADD_DIR);
+    deletall(Repository.RM_DIR);
+    Stage stage = readObject(Repository.STAGE, Stage.class);
+    stage.addList = new TreeMap<>();
+    stage.rmList = new ArrayList<>();
+    writeObject(Repository.STAGE, stage);}
 }

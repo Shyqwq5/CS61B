@@ -117,7 +117,8 @@ public class Commit implements Serializable {
         //change Head into this commit
         writeObject(Repository.HEAD,this);
 
-
+        //update stage
+        updatestage();
     }
 
     public static TreeMap<File,String> deepCopyTreeMap(TreeMap<File, String> original) {

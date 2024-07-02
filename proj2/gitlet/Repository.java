@@ -197,7 +197,7 @@ public class Repository {
         Stage now = readObject(Repository.STAGE, Stage.class);
 
         System.out.println("=== Branches ===");
-        for(String branchname:branch.commits){
+        for(String branchname:branch.branchs.keySet()){
             if(branchname.equals(branch.branchnow)){
                 System.out.println("*"+branchname);
             }
@@ -278,8 +278,7 @@ public class Repository {
         branch.branchnow = branchname;
         writeObject(Repository.BRANCH,branch);
         changecommit(headsha1,branch.branchs.get(branch.branchnow));
-
-
+        updatestage();
     }
 
 
@@ -325,7 +324,9 @@ public class Repository {
     }
 
     public static void mergecommand(){
-        
+
+
+
     }
 
 
