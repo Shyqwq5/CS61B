@@ -195,9 +195,7 @@ public class Repository {
         File thisfile = join(COMMIT_DIR,sha1);
         Commit commit = readObject(thisfile,Commit.class);
         System.out.println("===");
-        System.out.println("commit");
-        System.out.print(" ");
-        System.out.print(sha1);
+        System.out.println("commit "+sha1);
         if(commit.merge != null){
             System.out.println(seven(commit.parent));
             System.out.print(" ");
@@ -206,8 +204,7 @@ public class Repository {
 
         SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z");
         String formattedDate = formatter.format(commit.date);
-        System.out.println("Date： ");
-        System.out.print(formattedDate);
+        System.out.println("Date： " + formattedDate);
         System.out.println(commit.message);
         System.out.println();
 
@@ -218,9 +215,7 @@ public class Repository {
         File thisfile = join(COMMIT_DIR,sha1);
         Commit commit = readObject(thisfile,Commit.class);
         System.out.println("===");
-        System.out.println("commit");
-        System.out.print(" ");
-        System.out.print(sha1);
+        System.out.println("commit "+sha1);
         if(commit.merge != null){
             System.out.println(seven(commit.parent));
             System.out.print(" ");
@@ -229,8 +224,7 @@ public class Repository {
 
         SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z");
         String formattedDate = formatter.format(commit.date);
-        System.out.println("Date： ");
-        System.out.print(formattedDate);
+        System.out.println("Date： " + formattedDate);
         System.out.println(commit.message);
         System.out.println();
     }
