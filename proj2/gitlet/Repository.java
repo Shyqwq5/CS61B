@@ -204,7 +204,7 @@ public class Repository {
 
         SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z");
         String formattedDate = formatter.format(commit.date);
-        System.out.println("Date： " + formattedDate);
+        System.out.println("Date: " + formattedDate);
         System.out.println(commit.message);
         System.out.println();
 
@@ -224,7 +224,7 @@ public class Repository {
 
         SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z");
         String formattedDate = formatter.format(commit.date);
-        System.out.println("Date： " + formattedDate);
+        System.out.println("Date: " + formattedDate);
         System.out.println(commit.message);
         System.out.println();
     }
