@@ -17,8 +17,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.nio.file.Path;
 
-import static org.eclipse.jetty.util.IO.delete;
-
 
 /** Assorted utilities.
  *
@@ -279,7 +277,19 @@ class Utils {
         }
     }
 
+    static void deletall(File thatfile){
+        if (thatfile.isDirectory()) {
+            File[] files = thatfile.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();  // 递归删除子文件和子目录
+                }
+            }
+        }
+    }
+
     static void updatestage(){
+    deletall(Repository.ADD_DIR);
     Stage stage = readObject(Repository.STAGE, Stage.class);
     stage.addList = new TreeMap<>();
     stage.rmList = new ArrayList<>();

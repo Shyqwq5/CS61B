@@ -93,7 +93,6 @@ public class Commit implements Serializable {
                 writeContents(blob_file, readContents(add_file));
                 //tree add that file
                 this.treeMap.put(f, file_sha1);
-                restrictedDelete(add_file);
             }
         }
 
