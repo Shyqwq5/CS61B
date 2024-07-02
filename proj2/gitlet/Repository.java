@@ -323,11 +323,38 @@ public class Repository {
         System.out.println("No commit with that id exists.");
     }
 
-    public static void mergecommand(){
+    public static void mergecommand(String branchname){
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+        Stage stage = readObject(Repository.STAGE, Stage.class);
+        if (!stage.rmList.isEmpty() || !stage.addList.isEmpty()){
+            System.out.println("You have uncommitted changes.");
+            return;}
+        if (!branch.branchs.containsKey(branchname)) {
+            System.out.println("A branch with that name does not exist.");
+            return;
+        }
+        if (branch.branchnow.equals(branchname)) {
+            System.out.println("Cannot merge a branch with itself.");
+            return;
+        }
 
 
 
-    }
+        }
+
+
+
+
+        //If there are staged additions or removals present, print the error message and exit.
+        //If a branch with the given name does not exist, print the error message
+        //If attempting to merge a branch with itself, print the error message
+        // If merge would generate an error because the commit that it does has no changes in it, just let the normal commit error message for this go through.
+        // If an untracked file in the current commit would be overwritten or deleted by the merge, print and exit;
+        // perform this check before doing anything else.
+        // You have uncommitted changes.
+        // A branch with that name does not exist.
+        // Cannot merge a branch with itself.
+        // There is an untracked file in the way; delete it, or add and commit it first.
 
 
 

@@ -284,7 +284,7 @@ class Utils {
             File[] files = thatfile.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    delete(file);  // 递归删除子文件和子目录
+                    restrictedDelete(file);  // 递归删除子文件和子目录
                 }
             }
         }

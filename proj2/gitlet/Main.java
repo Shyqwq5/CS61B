@@ -100,7 +100,11 @@ public class Main {
                 break;
 
             case "merge":
-                break;}}
+                secondArg = args[1];
+                Repository.mergecommand(secondArg);
+                break;
+        }
+    }
 
     public static void validateNumArgs(String cmd, String[] args, int n) {
         if (args.length != n) {
