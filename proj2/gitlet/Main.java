@@ -20,6 +20,8 @@ public class Main {
 
         String firstArg = args[0];
         String secondArg;
+        String thirdArg;
+        String fourthArg;
         switch(firstArg) {
 
             case "init":
@@ -50,31 +52,53 @@ public class Main {
                 break;
 
             case "checkout":
-                Repository.checkoutcommand();
+                if(args.length == 3){
+                    thirdArg = args[2];
+                    Repository.checkoutfile(thirdArg);}
+                if(args.length == 4){
+                    secondArg = args[1];
+                    fourthArg = args[3];
+                    Repository.checkoutcommit(secondArg,fourthArg);}
+                if(args.length == 2){
+                    secondArg = args[1];
+                    Repository.checkoutbranch(secondArg);}
                 break;
-
 
             case "log":
                 //validateNumArgs("log", args, 1);
                 Repository.logcommand();
                 break;
+
             case "global-log":
                 //validateNumArgs("global-log", args, 1);
                 Repository.globallogcommand();
                 break;
+
             case "find":
                 secondArg = args[1];
                 //validateNumArgs("find", args, 2);
                 Repository.findcommand(secondArg);
                 break;
+
             case "status":
+                Repository.statuscommand();
                 break;
+
             case "branch":
+                secondArg = args[1];
+                Repository.branchcommand(secondArg);
                 break;
+
             case "rm-branch":
+                secondArg = args[1];
+                Repository.rmbranchcommand(secondArg);
                 break;
+
             case "reset":
+                secondArg = args[1];
+                Repository.resetcommand(secondArg);
                 break;
+
             case "merge":
                 break;}}
 

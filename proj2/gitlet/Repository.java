@@ -55,8 +55,8 @@ public class Repository {
             } catch (IOException e) {
                 throw new RuntimeException(e);}
 
-            Branch master = new Branch();
-            writeObject(Repository.BRANCH,master);
+            Branch state = new Branch();
+            writeObject(Repository.BRANCH,state);
 
             try {
                 STAGE.createNewFile();
@@ -68,6 +68,8 @@ public class Repository {
 
             Commit init_command = new Commit("initial commit");
             init_command.makeinit();
+
+
 
         }
     }
@@ -145,12 +147,18 @@ public class Repository {
     }
 
     public static void globallogcommand(){
-        if (COMMIT_DIR.isDirectory()) {
+        /*if (COMMIT_DIR.isDirectory()) {
             File[] commits = COMMIT_DIR.listFiles();
                 for (File file : commits) {
                     String sha1 = file.getName();
                     printcommit(sha1);}
+        }*/
+
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+        for(String commit:branch.commits){
+            printcommit(commit);
         }
+
     }
 
     public static void findcommand(String message){
@@ -183,12 +191,146 @@ public class Repository {
         //=== Untracked Files ===
         //
         //finish
+
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+        String parent = sha1((Object) readContents(Repository.HEAD));
+        Stage now = readObject(Repository.STAGE, Stage.class);
+
         System.out.println("=== Branches ===");
+        for(String branchname:branch.commits){
+            if(branchname.equals(branch.branchnow)){
+                System.out.println("*"+branchname);
+            }
+            else System.out.println(branchname);
+        }
+        System.out.println();
+
+        System.out.println("=== Staged Files ===");
+        for (File file : now.addList.keySet()) {
+            System.out.println(file.getName());
+        }
+        System.out.println();
+
+        System.out.println("=== Removed Files ===");
+        for (File file : now.rmList) {
+            System.out.println(file.getName());
+        }
+
+        System.out.println();
+        System.out.println("=== Modifications Not Staged For Commit ===");
+        System.out.println();
+        System.out.println("=== Untracked Files ===");
+        System.out.println();
+
+    }
+    public static void checkoutfile(String filename){
+        File here = new File(System.getProperty("user.dir"));
+        File this_file = join(here, filename);
+        head_commit = gethead();
+        currentMap = head_commit.treeMap;
+        if (currentMap.containsKey(this_file)){
+            String sha =currentMap.get(this_file);
+            if(!this_file.exists()){forcecreat(this_file);
+            }
+            File blobfile = join(BLOB_DIR,filename,sha);
+            writeContents(this_file,readContents(blobfile));
+            return;
+        }
+        System.out.println("File does not exist in that commit.");
+
     }
 
-    public static void checkoutcommand(){
+    public static void checkoutcommit(String commitid,String filename){
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+        for(String commit:branch.commits){
+            if(commit.startsWith(commitid)){
+                File thisfile = join(COMMIT_DIR,commit);
+                Commit this_commit = readObject(thisfile,Commit.class);
+
+                File here = new File(System.getProperty("user.dir"));
+                File this_file = join(here, filename);
+                TreeMap<File,String> this_commitMap = this_commit.treeMap;
+                if (this_commitMap.containsKey(this_file)){
+                    String sha =this_commitMap.get(this_file);
+                    if(!this_file.exists()){forcecreat(this_file);
+                    }
+                    File blobfile = join(BLOB_DIR,filename,sha);
+                    writeContents(this_file,readContents(blobfile));
+                    return;
+                }
+                System.out.println("File does not exist in that commit.");
+            }
+            System.out.println("No commit with that id exists.");
+        }
+    }
+
+    public static void checkoutbranch(String branchname){
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+        String headsha1 = sha1(readContents(HEAD));
+        if (branchname.equals(branch.branchnow)){
+                System.out.println("No need to checkout the current branch.");
+                return;
+            }
+        if (!branch.commits.contains(branchname)) {
+            System.out.println("No such branch exists.");
+            return;
+        }
+        branch.branchnow = branchname;
+        writeObject(Repository.BRANCH,branch);
+        changecommit(headsha1,branch.branchs.get(branch.branchnow));
+
 
     }
+
+
+
+    public static void branchcommand(String branchname){
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+        if (branch.commits.contains(branchname)) {
+            System.out.println("A branch with that name already exists.");
+            return;
+        }
+        String headsha1 = sha1(readContents(HEAD));
+        branch.branchs.put(branchname,headsha1);
+        branch.splitpoint = headsha1;
+        writeObject(BRANCH,branch);
+    }
+
+    public static void rmbranchcommand(String branchname){
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+
+        if (branchname.equals(branch.branchnow)){
+            System.out.println("Cannot remove the current branch.");
+            return;
+        }
+        if (!branch.commits.contains(branchname)) {
+            System.out.println("A branch with that name does not exist.");
+            return;
+        }
+        branch.commits.remove(branchname);
+        writeObject(BRANCH,branch);
+    }
+
+    public static void resetcommand(String commitid){
+        String headsha1 = sha1(readContents(HEAD));
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+        for(String commit:branch.commits){
+            if(commit.startsWith(commitid)){
+                changecommit(headsha1,commit);
+                branch.branchs.put(branch.branchnow,commit);
+                writeObject(BRANCH,branch);
+            }
+        }
+        System.out.println("No commit with that id exists.");
+    }
+
+    public static void mergecommand(){
+        
+    }
+
+
+
+
 
 
     public static void serialcommit(String sha1){
@@ -229,9 +371,44 @@ public class Repository {
         System.out.println();
     }
 
+
     public static Commit gethead(){
         Commit head = readObject(HEAD, Commit.class);
         return head;
+    }
+
+
+
+    public static void changecommit(String now,String that){
+        File filenow = join(COMMIT_DIR,now);
+        Commit commitnow = readObject(filenow,Commit.class);
+        File filethat = join(COMMIT_DIR,that);
+        Commit committhat = readObject(filethat,Commit.class);
+        TreeMap<File, String> nowtree = commitnow.treeMap;
+        TreeMap<File, String> thattree = committhat.treeMap;
+
+        for (File file : nowtree.keySet()) {
+            if (thattree.containsKey(file)) {
+                if(!nowtree.get(file).equals(thattree.get(file))){
+                    restrictedDelete(file);
+                }
+            }
+            else restrictedDelete(file);
+            }
+        for (File file : thattree.keySet()) {
+            if(file.exists()){
+                if (!sha1(file.getName(),readContents(file)).equals(thattree.get(file))){
+                    throw new RuntimeException("There is an untracked file in the way; delete it, or add and commit it first.");
+                };
+            }
+            else {forcecreat(file);
+                File blobfile = join(BLOB_DIR,file.getName(),thattree.get(file));
+                writeContents(file,readContents(blobfile));
+            }
+        }
+
+        writeObject(Repository.HEAD,committhat);
+
     }
 
 

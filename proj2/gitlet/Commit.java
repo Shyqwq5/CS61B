@@ -39,6 +39,7 @@ public class Commit implements Serializable {
     public Commit(String message) {
         this.message = message;
         this.treeMap = new TreeMap<>();
+        merge = null;
     }
 
     public void makeinit(){
@@ -49,10 +50,17 @@ public class Commit implements Serializable {
         File this_path = join(Repository.COMMIT_DIR, sha1);
         forcecreat(this_path);
         writeObject(this_path, this);
+
+        //write into branch file
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+
+        branch.branchs.put("master",sha1);
+        branch.branchnow = "master";
+        branch.commits.add(sha1);
+        writeObject(Repository.BRANCH, branch);
+
         //change Head into this commit
         writeObject(Repository.HEAD,this);
-
-
     }
 
     public void makecommit() {
@@ -99,6 +107,13 @@ public class Commit implements Serializable {
         File this_path = join(Repository.COMMIT_DIR, sha1);
         forcecreat(this_path);
         writeObject(this_path, this);
+
+        //change Branch head
+        Branch branch = readObject(Repository.BRANCH, Branch.class);
+        branch.branchs.put(branch.branchnow,sha1);
+        branch.commits.add(sha1);
+        writeObject(Repository.BRANCH, branch);
+
         //change Head into this commit
         writeObject(Repository.HEAD,this);
 
